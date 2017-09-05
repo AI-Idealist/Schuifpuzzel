@@ -30,18 +30,18 @@ public class AISpeler {
 		}
 	}
 
-	
-    public AISpeler(Bord iniopstelling) {
-    	MinPQ<Knoop> zoekpad = new MinPQ<Knoop>();
-//    	Stack<Board> padNaarDeOplossing = new Stack<Board>();
+	// find a solution to the initial bord (using the A* algorithm)
+    public void zoekOplossing(Bord iniopstelling) {
+    	MinPQ<Knoop> open = new MinPQ<Knoop>();
+
     	if (iniopstelling == null) throw new java.lang.IllegalArgumentException();
-    	
-        knoop = new Knoop(iniopstelling, 0, null);
+    	knoop = new Knoop(iniopstelling, 0, null);
     	knoopkopie = new Knoop(iniopstelling.twin(), 0, null);
-    	zoekpad.insert(knoop);
-    	zoekpad.insert(knoopkopie);
-    	knoop = zoekpad.delMin();
-    	while(!knoop.isDoelOpstelling()) {
+    	open.insert(knoop);
+    	open.insert(knoopkopie);
+    	knoop = open.delMin();
+    	
+        while(!knoop.isDoelOpstelling()) {
     		for(Bord buur: knoop.bord.buren()) {
     			Bord ReedsBezochtBord = null;
     			if(knoop.Ouder != null) {
@@ -49,10 +49,10 @@ public class AISpeler {
                         }    
     			if(!buur.equals(ReedsBezochtBord)) {
     				Knoop vlgknoop = new Knoop(buur, knoop.zetN + 1, knoop);
-    				zoekpad.insert(vlgknoop);
+    				open.insert(vlgknoop);
     			}
     		}
-    		knoop = zoekpad.delMin();
+    		knoop = open.delMin();
     	}
     	Knoop startknoop = knoop;
 	padNaarDeOplossing.push(startknoop.bord);
@@ -69,11 +69,12 @@ public class AISpeler {
     	else 
     		aantalzetten = knoop.zetN;
     	
-    }          // find a solution to the initial bord (using the A* algorithm)
+    }          
    
+     // is the initial bord solvable?
     public boolean vondOplossing() {
     	return isOpgelost;
-    }           // is the initial bord solvable?
+    }          
     
     // min number of zetten to solve initial bord; -1 if unsolvable
     public int zetten() {

@@ -3,15 +3,15 @@ import edu.princeton.cs.algs4.Bag;
 
 public class Bord {
    private  int N;
-   private  int[][] cellen;
+   private  int[][] velden;
      
-    public Bord(int[][] pvelden) {
+   public Bord(int[][] pvelden) {
     	N = pvelden.length;
-    	cellen = new int[N][N];
+    	velden = new int[N][N];
 
     	for(int i = 0; i < N; i++) {
     		for(int j = 0; j < N; j++) {
-                    cellen[i][j] = pvelden[i][j];
+                    velden[i][j] = pvelden[i][j];
     		}
     	}
     }         
@@ -25,7 +25,7 @@ public class Bord {
     	int count = 0;
     	for(int i = 0; i < N; i++) {
     		for(int j = 0; j < N; j++) {
-    			if(cellen[i][j] != N*i+j+1 && cellen[i][j] != 0) {
+    			if(velden[i][j] != N*i+j+1 && velden[i][j] != 0) {
     				count++;
     			}
     		}
@@ -38,12 +38,12 @@ public class Bord {
     	int manhattanL = 0;
     	for(int i = 0; i < N; i++) {
     		for(int j = 0; j < N; j++) {
-    			if(cellen[i][j] != 0) {
-        	    	if(cellen[i][j]%N == 0) {
-        	    		manhattanL = manhattanL + Math.abs(cellen[i][j]/N-1-i) + Math.abs(N-1-j);
+    			if(velden[i][j] != 0) {
+        	    	if(velden[i][j]%N == 0) {
+        	    		manhattanL = manhattanL + Math.abs(velden[i][j]/N-1-i) + Math.abs(N-1-j);
         	    	}
         	    	else {
-        	    		manhattanL = manhattanL + Math.abs(cellen[i][j]/N-i) + Math.abs(velden[i][j]%N -1-j);
+        	    		manhattanL = manhattanL + Math.abs(velden[i][j]/N-i) + Math.abs(velden[i][j]%N -1-j);
         	    	}	
     			}
     		}
@@ -61,7 +61,7 @@ public class Bord {
         int[][] kopiebord = new int[N][N];
        	for(int i = 0; i < N; i++) {
           for(int j = 0; j < N; j++) {
-        	kopiebord[i][j] = cellen[i][j];
+        	kopiebord[i][j] = velden[i][j];
           }
         }
    	
@@ -85,7 +85,7 @@ public class Bord {
         else {
         	for(int i = 0; i < this.N; i++) {
         		for(int j = 0; j < this.N; j++) {
-        			if(that.cellen[i][j] != this.cellen[i][j])
+        			if(that.velden[i][j] != this.velden[i][j])
         				return false;
         		}
         	}
@@ -100,7 +100,7 @@ public class Bord {
     	int index_y = 0;
     	for(int i = 0; i < this.N; i++) {
     		for(int j = 0; j < this.N; j++) {
-    			if(cellen[i][j]==0) {
+    			if(velden[i][j]==0) {
     				index_x = i;
     				index_y = j;
     			}
@@ -145,7 +145,7 @@ public class Bord {
         s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", cellen[i][j]));
+                s.append(String.format("%2d ", velden[i][j]));
             }
             s.append("\n");
         }
@@ -166,7 +166,7 @@ private int[][] kopieerVelden() {
     	int[][] copy = new int[N][N];
     	for(int i = 0; i < N; i++) {
     		for(int j = 0; j < N; j++) {
-    			copy[i][j] = cellen[i][j];
+    			copy[i][j] = velden[i][j];
     		}
     	}
     	return copy;

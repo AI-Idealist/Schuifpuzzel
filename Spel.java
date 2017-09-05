@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class Spel {
     Bord bord;
-    AISpeler aispeler = new AISpeler(bord);
+    AISpeler aispeler;
     
     public static void main(String[] args) {
               
@@ -13,27 +13,27 @@ public class Spel {
       In in = new In(filename);
       int N = in.readInt();
 
-      int[][] tiles = new int[N][N];
+      int[][] opstelling = new int[N][N];
       for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
-           tiles[i][j] = in.readInt();
+           opstelling[i][j] = in.readInt();
         }
       }
-      Bord initial = new Bord(tiles);
-          
-      // solve the puzzle
-      AISpeler speler = new AISpeler(initial);
+      Bord bord = new Bord(opstelling);
+      AISpeler aispeler  = new AISpeler();   
+      
+      aispeler.zoekOplossing(bord);
      
-      if (!speler.vondOplossing()){
+      if (!aispeler.vondOplossing()){
          StdOut.println("No solution possible");}
       else {
-        StdOut.println("Minimum number of moves = " + speler.zetten());
-        for (Bord board : speler.Oplossing())
+        StdOut.println("Minimum number of moves = " + aispeler.zetten());
+        for (Bord board : aispeler.Oplossing())
           StdOut.println(board);
     
         }
      }
-    }// unit tests (not graded)
+    }
     
     
     
